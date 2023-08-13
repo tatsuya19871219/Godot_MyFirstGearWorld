@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkk10jbgx3epm"]
+
+[ext_resource type="Script" path="res://graphs/graph_canvas.gd" id="1_ahlyt"]
+
+[node name="GraphCanvas" type="Node2D"]
+script = ExtResource("1_ahlyt")

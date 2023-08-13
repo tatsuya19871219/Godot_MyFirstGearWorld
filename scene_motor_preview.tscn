@@ -1,0 +1,304 @@
+[gd_scene load_steps=9 format=3 uid="uid://bdv4q1i3olw5u"]
+
+[ext_resource type="PackedScene" uid="uid://c6ovtpkrinc5c" path="res://motor/motor_3coils.tscn" id="1_crbto"]
+[ext_resource type="Texture2D" uid="uid://c4iue14h55vr2" path="res://logo/GearWorldTitle-gear.png" id="2_p8o1f"]
+[ext_resource type="Texture2D" uid="uid://brs3i8wd2ho2" path="res://logo/GearWorldTitle-logo.png" id="3_n35b6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7gaso"]
+size = Vector3(100, 100, 100)
+
+[sub_resource type="Animation" id="Animation_vdwpi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Motor/motor_body/Box-top/title-gear:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.5708, -3.14159, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 4.5, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.5708, 1.5708, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Motor/motor_body/Box-top:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.25, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Motor/motor_body/Box-top:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Motor/motor_body/Box-top:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Motor/motor_body/Box-bottom:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Motor:input_strength")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_nb3w1"]
+resource_name = "motor_preview"
+length = 10.0
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Motor/motor_body/Box-top/title-gear")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array()
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Motor/motor_body/Box-top/title-gear:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3, 6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1.5708, 0, 0), Vector3(1.5708, 3.14159, 0), Vector3(1.5708, 6.28319, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 4.5, 0), Vector3(0, 4.5, 0), Vector3(0, 0, 2.5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-1.5708, 1.5708, 0), Vector3(-1.5708, 1.5708, 0), Vector3(0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Motor/motor_body/Box-top:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 2, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-1.25, 0, 0), Vector3(-1.25, 1, 2.5), Vector3(-1.25, 1, 10)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Motor/motor_body/Box-top:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 2, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.785398, 0, 0), Vector3(1.5708, 0, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Motor/motor_body/Box-top:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 3.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Motor/motor_body/Box-bottom:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 3.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Motor:input_strength")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, -1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nofml"]
+_data = {
+"RESET": SubResource("Animation_vdwpi"),
+"motor_preview": SubResource("Animation_nb3w1")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2rcer"]
+
+[node name="SceneMotorPreview" type="Node"]
+
+[node name="Area_Gravity" type="Area3D" parent="."]
+editor_description = "Gravitational field"
+gravity_space_override = 3
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area_Gravity"]
+shape = SubResource("BoxShape3D_7gaso")
+
+[node name="Area_Magnet" type="Area3D" parent="."]
+editor_description = "Magnet field"
+collision_layer = 2
+collision_mask = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area_Magnet"]
+shape = SubResource("BoxShape3D_7gaso")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5.26395, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-3.61999e-06, -1, -3.61999e-06, 0, -3.61999e-06, 1, -1, 3.61999e-06, 1.31043e-11, 0, 4.5, 0)
+projection = 1
+size = 4.5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "motor_preview"
+libraries = {
+"": SubResource("AnimationLibrary_nofml")
+}
+
+[node name="Base" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Base"]
+shape = SubResource("BoxShape3D_2rcer")
+disabled = true
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="Base"]
+node_a = NodePath("..")
+node_b = NodePath("../../Motor")
+params/bias = 0.99
+angular_limit/enable = true
+angular_limit/upper = 0.0
+angular_limit/lower = 0.0
+
+[node name="Motor" parent="." instance=ExtResource("1_crbto")]
+
+[node name="DummyMass1" parent="Motor/rotor_3coils" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.06152e-17, 0.5, 0)
+
+[node name="DummyMass2" parent="Motor/rotor_3coils" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, -0.25, 0)
+
+[node name="DummyMass3" parent="Motor/rotor_3coils" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, -0.25, 0)
+
+[node name="HingeJoint3D1" parent="Motor/rotor_3coils" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.06152e-17, 0.5, 0)
+
+[node name="HingeJoint3D2" parent="Motor/rotor_3coils" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, -0.25, 0)
+
+[node name="HingeJoint3D3" parent="Motor/rotor_3coils" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, -0.25, 0)
+
+[node name="Box-top" parent="Motor/motor_body" index="6"]
+visible = true
+
+[node name="title-gear" type="Sprite3D" parent="Motor/motor_body/Box-top" index="0"]
+transform = Transform3D(-1, 2.53518e-06, 9.17733e-12, 0, -3.61999e-06, 1, 2.53518e-06, 1, 3.61999e-06, 0, 5.5, 0)
+texture = ExtResource("2_p8o1f")
+
+[node name="title-logo" type="Sprite3D" parent="Motor/motor_body/Box-top" index="1"]
+transform = Transform3D(-1, 8.74228e-08, 0, 3.82137e-15, 4.37114e-08, 1, 8.74228e-08, 1, -4.37114e-08, 0, 5.5, 0)
+texture = ExtResource("3_n35b6")
+
+[editable path="Motor"]
+[editable path="Motor/rotor_3coils/motor_rotor"]
+[editable path="Motor/motor_body"]

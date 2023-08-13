@@ -1,0 +1,101 @@
+[gd_scene load_steps=4 format=3 uid="uid://c84i2aon5c70n"]
+
+[ext_resource type="PackedScene" uid="uid://c6ovtpkrinc5c" path="res://motor/motor_3coils.tscn" id="1_gorb6"]
+[ext_resource type="Texture2D" uid="uid://b38kch5lfedns" path="res://icon.svg" id="2_a7iqv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c7u5x"]
+size = Vector3(100, 100, 100)
+
+[node name="Test" type="Node"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.818822, 0.157979, -0.551882, 0, 0.961387, 0.275201, 0.574048, -0.225341, 0.787204, -4.54286, 2.71255, 6.56382)
+projection = 1
+size = 6.0
+
+[node name="Camera3D2" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.564)
+projection = 1
+current = true
+size = 6.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.0866316, -0.889147, -0.449346, 0.502049, -0.428546, 0.751196, -0.860489, -0.160517, 0.483521, -5.46345, 25.9955, -1.59427)
+
+[node name="Area_Gravity" type="Area3D" parent="."]
+editor_description = "Gravitational field"
+gravity_space_override = 3
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area_Gravity"]
+shape = SubResource("BoxShape3D_c7u5x")
+
+[node name="Area_Magnet" type="Area3D" parent="."]
+editor_description = "Magnet field"
+collision_layer = 2
+collision_mask = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area_Magnet"]
+shape = SubResource("BoxShape3D_c7u5x")
+
+[node name="Motor" parent="." instance=ExtResource("1_gorb6")]
+input_strength = -50.0
+
+[node name="rotor_3coils" parent="Motor" index="0"]
+strength = -50.0
+
+[node name="DummyMass1" parent="Motor/rotor_3coils" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.06152e-17, 0.5, 0)
+
+[node name="MeshInstance3D" parent="Motor/rotor_3coils/DummyMass1" index="1"]
+visible = true
+
+[node name="DummyMass2" parent="Motor/rotor_3coils" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, -0.25, 0)
+
+[node name="MeshInstance3D" parent="Motor/rotor_3coils/DummyMass2" index="1"]
+visible = true
+
+[node name="DummyMass3" parent="Motor/rotor_3coils" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, -0.25, 0)
+
+[node name="MeshInstance3D" parent="Motor/rotor_3coils/DummyMass3" index="1"]
+visible = true
+
+[node name="HingeJoint3D1" parent="Motor/rotor_3coils" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.06152e-17, 0.5, 0)
+
+[node name="HingeJoint3D2" parent="Motor/rotor_3coils" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433013, -0.25, 0)
+
+[node name="HingeJoint3D3" parent="Motor/rotor_3coils" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433013, -0.25, 0)
+
+[node name="Box-bottom" parent="Motor/motor_body" index="0"]
+visible = false
+
+[node name="Torus" parent="Motor/motor_body" index="7"]
+visible = false
+
+[node name="Base" type="StaticBody3D" parent="."]
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Base"]
+polygon = PackedVector2Array(-2, 0, -2, -2, 2, -2, 2, 0, 3, 0, 3, -2.5, -3, -2.5, -3, 0)
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="Base"]
+node_a = NodePath("..")
+node_b = NodePath("../../Motor")
+params/bias = 0.99
+angular_limit/enable = true
+angular_limit/upper = 0.0
+angular_limit/lower = 0.0
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.75, -0.75, 0)
+texture = ExtResource("2_a7iqv")
+
+[editable path="Motor"]
+[editable path="Motor/rotor_3coils/motor_rotor"]
+[editable path="Motor/motor_body"]

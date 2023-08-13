@@ -3,6 +3,7 @@
 
 # Godot-specific ignores
 .import/
+*.import
 export.cfg
 export_presets.cfg
 
@@ -13,3 +14,9 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+.wsuo
+VSWorkspaceState.json
+
+models/
+scene_models/

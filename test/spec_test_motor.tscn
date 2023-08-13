@@ -1,0 +1,231 @@
+[gd_scene load_steps=17 format=3 uid="uid://fs0kqytmsues"]
+
+[ext_resource type="Script" path="res://test/spec_test_motor.gd" id="1_2ussf"]
+[ext_resource type="PackedScene" uid="uid://c6ovtpkrinc5c" path="res://motor/motor_3coils.tscn" id="1_ch760"]
+[ext_resource type="Script" path="res://test/motor_input_label.gd" id="2_j6gle"]
+[ext_resource type="PackedScene" uid="uid://cv3riuqcnf34q" path="res://graphs/timeseries_graph.tscn" id="4_gl4jb"]
+[ext_resource type="Script" path="res://graph_plotter_utilities/timeseries_graph_plotter_monitoring.gd" id="5_pnw6w"]
+[ext_resource type="PackedScene" uid="uid://c0pic3jshf2sy" path="res://meters/torque_meter.tscn" id="6_ejfyk"]
+[ext_resource type="Script" path="res://test/torque_meter_toggle_button.gd" id="7_aobxy"]
+[ext_resource type="Script" path="res://meters/torque_meter_probe.gd" id="8_7pbvu"]
+[ext_resource type="PackedScene" uid="uid://cj6ggx2tss1v3" path="res://graphs/scatter_graph.tscn" id="8_kdtwp"]
+[ext_resource type="Script" path="res://graph_plotter_utilities/comet_graph_plotter_monitoring.gd" id="9_ppolo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c7u5x"]
+size = Vector3(100, 100, 100)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_em14v"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="LabelSettings" id="LabelSettings_j0u21"]
+font_size = 32
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_j4201"]
+font_size = 28
+
+[sub_resource type="LabelSettings" id="LabelSettings_r75oo"]
+font_size = 24
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_2lrcn"]
+height = 0.5
+
+[node name="Test" type="Node"]
+script = ExtResource("1_2ussf")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(256, 256)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(0.818822, 0.157979, -0.551882, 0, 0.961387, 0.275201, 0.574048, -0.225341, 0.787204, -4.54286, 2.71255, 6.56382)
+projection = 1
+size = 6.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.0866316, -0.889147, -0.449346, 0.502049, -0.428546, 0.751196, -0.860489, -0.160517, 0.483521, -5.46345, 25.9955, -1.59427)
+
+[node name="Area_Gravity" type="Area3D" parent="."]
+editor_description = "Gravitational field"
+gravity_space_override = 3
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area_Gravity"]
+shape = SubResource("BoxShape3D_c7u5x")
+
+[node name="Area_Magnet" type="Area3D" parent="."]
+editor_description = "Magnet field"
+collision_layer = 2
+collision_mask = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area_Magnet"]
+shape = SubResource("BoxShape3D_c7u5x")
+
+[node name="Motor" parent="." instance=ExtResource("1_ch760")]
+magnet_strength = 0.1
+
+[node name="rotor_3coils" parent="Motor" index="0"]
+dummy_mass_position_ratio = 0.25
+
+[node name="DummyMass1" parent="Motor/rotor_3coils" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.53076e-17, 0.25, 0)
+
+[node name="DummyMass2" parent="Motor/rotor_3coils" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.216506, -0.125, 0)
+
+[node name="DummyMass3" parent="Motor/rotor_3coils" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.216506, -0.125, 0)
+
+[node name="HingeJoint3D1" parent="Motor/rotor_3coils" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.53076e-17, 0.25, 0)
+
+[node name="HingeJoint3D2" parent="Motor/rotor_3coils" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.216506, -0.125, 0)
+
+[node name="HingeJoint3D3" parent="Motor/rotor_3coils" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.216506, -0.125, 0)
+
+[node name="N" parent="Motor" index="2"]
+gravity = -0.1
+
+[node name="S" parent="Motor" index="3"]
+gravity = 0.1
+
+[node name="Base" type="StaticBody3D" parent="."]
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Base"]
+polygon = PackedVector2Array(-2, 0, -2, -2, 2, -2, 2, 0, 3, 0, 3, -2.5, -3, -2.5, -3, 0)
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="Base"]
+node_a = NodePath("..")
+node_b = NodePath("../../Motor")
+params/bias = 0.99
+angular_limit/enable = true
+angular_limit/upper = 0.0
+angular_limit/lower = 0.0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1156.0
+offset_bottom = 647.0
+
+[node name="Motor3DSprite2D" type="Sprite2D" parent="Control"]
+position = Vector2(295, 208)
+texture = SubResource("ViewportTexture_em14v")
+
+[node name="HSlider" type="HSlider" parent="Control"]
+layout_mode = 0
+offset_left = 155.0
+offset_top = 61.0
+offset_right = 436.0
+offset_bottom = 99.0
+min_value = -50.0
+max_value = 50.0
+
+[node name="InputLabel" type="Label" parent="Control/HSlider"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = -47.0
+offset_right = 285.0
+offset_bottom = 1.0
+text = "Input Strength: 0.0"
+label_settings = SubResource("LabelSettings_j0u21")
+script = ExtResource("2_j6gle")
+
+[node name="AngularVelocityGraph" parent="Control" instance=ExtResource("4_gl4jb")]
+position = Vector2(524, 49)
+label_y = "Rotations per seconds"
+value_max = 5.0
+value_min = -5.0
+
+[node name="Probe" type="Node" parent="Control/AngularVelocityGraph" node_paths=PackedStringArray("target")]
+script = ExtResource("5_pnw6w")
+target = NodePath("../../../Motor/Axis")
+property_name = "angular_velocity"
+subproperty_name = "z"
+plot_function = 2
+
+[node name="TorqueMeter" parent="Control" instance=ExtResource("6_ejfyk")]
+position = Vector2(776, 480)
+scale = Vector2(0.75, 0.75)
+
+[node name="ToggleButton" type="CheckButton" parent="Control/TorqueMeter" node_paths=PackedStringArray("my_probe")]
+offset_left = 65.3333
+offset_top = 121.333
+offset_right = 138.334
+offset_bottom = 152.333
+scale = Vector2(1.5, 1.5)
+text = "Off"
+script = ExtResource("7_aobxy")
+my_probe = NodePath("../../../TorqueProbe")
+
+[node name="Label" type="Label" parent="Control/TorqueMeter"]
+offset_left = -157.333
+offset_top = 129.333
+offset_right = 53.667
+offset_bottom = 177.333
+text = "Torque Meter"
+label_settings = SubResource("LabelSettings_j4201")
+
+[node name="AxisDissipationGraph" parent="Control" instance=ExtResource("8_kdtwp")]
+position = Vector2(141, 328)
+history_size = 5
+label_x = "x"
+label_y = "y"
+default_plot_color = Color(1, 0, 0, 1)
+default_dot_radius = 2.5
+x_range = Vector2(-0.1, 0.1)
+y_range = Vector2(-0.1, 0.1)
+
+[node name="Probe" type="Node" parent="Control/AxisDissipationGraph" node_paths=PackedStringArray("x_target", "y_target")]
+script = ExtResource("9_ppolo")
+x_target = NodePath("../../../Motor/Axis")
+x_property_name = "position"
+x_subproperty_name = "x"
+y_target = NodePath("../../../Motor/Axis")
+y_property_name = "position"
+y_subproperty_name = "y"
+
+[node name="Label" type="Label" parent="Control/AxisDissipationGraph"]
+offset_left = -51.0
+offset_top = 216.0
+offset_right = 89.0
+offset_bottom = 253.0
+rotation = -1.5708
+text = "Axis wobble"
+label_settings = SubResource("LabelSettings_r75oo")
+
+[node name="TorqueProbe" type="RigidBody3D" parent="." node_paths=PackedStringArray("parent_toque_meter")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00854254, 1.19209e-07, 3.00786)
+inertia = Vector3(1, 1, 1)
+script = ExtResource("8_7pbvu")
+parent_toque_meter = NodePath("../Control/TorqueMeter")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TorqueProbe"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_2lrcn")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="TorqueProbe"]
+node_a = NodePath("..")
+node_b = NodePath("../../Motor/Axis")
+params/bias = 0.99
+angular_limit/enable = true
+angular_limit/upper = 0.0
+angular_limit/lower = 0.0
+
+[node name="ProbeTimer" type="Timer" parent="TorqueProbe"]
+wait_time = 0.1
+autostart = true
+
+[connection signal="value_changed" from="Control/HSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="value_changed" from="Control/HSlider" to="Control/HSlider/InputLabel" method="_on_h_slider_value_changed"]
+[connection signal="toggled" from="Control/TorqueMeter/ToggleButton" to="Control/TorqueMeter/ToggleButton" method="_on_toggled"]
+[connection signal="timeout" from="TorqueProbe/ProbeTimer" to="TorqueProbe" method="_on_probe_timer_timeout"]
+
+[editable path="Motor"]
+[editable path="Motor/rotor_3coils/motor_rotor"]
+[editable path="Motor/motor_body"]

@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://dylovbcephl4e"]
+
+[ext_resource type="Script" path="res://general/NestableRigidBody3D.gd" id="1_4xgal"]
+[ext_resource type="PackedScene" uid="uid://da0kdnwy73b0t" path="res://mini4wd/rear_axle.tscn" id="1_gwqcw"]
+[ext_resource type="PackedScene" uid="uid://cyn3ymms8iogw" path="res://mini4wd/front_axle.tscn" id="3_s7252"]
+[ext_resource type="PackedScene" uid="uid://yw8b01ajmyqq" path="res://mini4wd/axis_bridge.tscn" id="4_pxxlx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b1hht"]
+
+[node name="Axes" type="RigidBody3D"]
+script = ExtResource("1_4xgal")
+my_collision_exceptions = Array[NodePath]([NodePath("RearAxis"), NodePath("FrontAxis"), NodePath("AxisBridge")])
+
+[node name="RearAxis" parent="." instance=ExtResource("1_gwqcw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0, 0)
+inertia = Vector3(1, 1, 1)
+
+[node name="FrontAxis" parent="." instance=ExtResource("3_s7252")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 0)
+inertia = Vector3(1, 1, 1)
+
+[node name="AxisBridge" parent="." instance=ExtResource("4_pxxlx")]
+transform = Transform3D(-4.1572e-08, 1.35076e-08, -1, 0.309017, 0.951057, 0, 0.951057, -0.309017, -4.37114e-08, 0, 0, 2.75)
+inertia = Vector3(1, 1, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_b1hht")
+disabled = true
+
+[editable path="RearAxis"]
+[editable path="FrontAxis"]
+[editable path="AxisBridge"]

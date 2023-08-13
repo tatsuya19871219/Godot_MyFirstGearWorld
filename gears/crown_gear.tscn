@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://cr84f30kdn8wt"]
+
+[ext_resource type="Script" path="res://gears/crown_gear.gd" id="1_boxyu"]
+[ext_resource type="PackedScene" uid="uid://crba3dhiwhjaj" path="res://gears/models/CrownGear.glb" id="2_jlejp"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wdtmd"]
+friction = 0.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0c5lg"]
+height = 0.15
+radius = 0.575
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_40003"]
+friction = 0.0
+
+[node name="CrownGear" type="RigidBody3D"]
+mass = 0.1
+inertia = Vector3(1, 1, 1)
+physics_material_override = SubResource("PhysicsMaterial_wdtmd")
+script = ExtResource("1_boxyu")
+teeth_number = 15
+my_collision_exceptions = Array[NodePath]([NodePath("CrownGear/CrownGearTooth-rigid")])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 3.47734e-09, -0.0795523)
+shape = SubResource("CylinderShape3D_0c5lg")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.03)
+node_a = NodePath("..")
+node_b = NodePath("../CrownGear/CrownGearTooth-rigid")
+params/bias = 0.99
+angular_limit/enable = true
+angular_limit/upper = 0.0
+angular_limit/lower = 0.0
+
+[node name="CrownGear" parent="." instance=ExtResource("2_jlejp")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+
+[node name="CrownGearTooth-rigid" parent="CrownGear" index="1"]
+mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_40003")
+
+[editable path="CrownGear"]

@@ -1,0 +1,90 @@
+[gd_scene load_steps=3 format=3 uid="uid://cv3riuqcnf34q"]
+
+[ext_resource type="Script" path="res://graphs/timeseries_graph.gd" id="1_lycf8"]
+[ext_resource type="PackedScene" uid="uid://ywey5g3cusiv" path="res://graphs/graph_grid.tscn" id="2_l7vif"]
+
+[node name="LineGraph" type="Node2D"]
+script = ExtResource("1_lycf8")
+origin_position = 2
+metadata/_edit_group_ = true
+
+[node name="BG" type="ColorRect" parent="."]
+offset_right = 550.0
+offset_bottom = 275.0
+color = Color(0, 0, 0, 1)
+
+[node name="GraphGrid" parent="." instance=ExtResource("2_l7vif")]
+position = Vector2(75, 25)
+width = 400.0
+height = 200.0
+line_width_major = 5.0
+major_interval = 15
+origin_position = 2
+
+[node name="XLabel" type="Label" parent="."]
+offset_left = 495.0
+offset_top = 212.0
+offset_right = 535.0
+offset_bottom = 238.0
+text = "Time"
+
+[node name="YLabel" type="Label" parent="."]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = 215.0
+offset_right = 188.0
+offset_bottom = 241.0
+grow_vertical = 2
+rotation = -1.5708
+text = "Value"
+horizontal_alignment = 1
+
+[node name="MaxYValue" type="Label" parent="."]
+offset_left = 25.0
+offset_top = 15.0
+offset_right = 65.0
+offset_bottom = 41.0
+text = "20.0"
+horizontal_alignment = 2
+
+[node name="CenterYValue" type="Label" parent="."]
+offset_left = 25.0
+offset_top = 112.0
+offset_right = 65.0
+offset_bottom = 138.0
+text = "0.0"
+horizontal_alignment = 2
+
+[node name="MinYValue" type="Label" parent="."]
+offset_left = 25.0
+offset_top = 215.0
+offset_right = 65.0
+offset_bottom = 241.0
+text = "-20.0"
+horizontal_alignment = 2
+
+[node name="MaxXValue" type="Label" parent="."]
+offset_left = 457.0
+offset_top = 230.0
+offset_right = 497.0
+offset_bottom = 256.0
+text = "10.0"
+horizontal_alignment = 1
+
+[node name="CenterXValue" type="Label" parent="."]
+offset_left = 256.0
+offset_top = 230.0
+offset_right = 296.0
+offset_bottom = 256.0
+text = "5.0"
+horizontal_alignment = 1
+
+[node name="MinXValue" type="Label" parent="."]
+offset_left = 54.0
+offset_top = 230.0
+offset_right = 94.0
+offset_bottom = 256.0
+text = "0.0"
+horizontal_alignment = 1

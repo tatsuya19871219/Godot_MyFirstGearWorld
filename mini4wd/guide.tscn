@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://bhf0p8uon2hox"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_uiccc"]
+friction = 0.0
+
+[sub_resource type="TorusMesh" id="TorusMesh_owusp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qnxs0"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_sjmua"]
+height = 0.5
+radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wv0fv"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_17xcx"]
+material = SubResource("StandardMaterial3D_wv0fv")
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.5
+
+[node name="Guide" type="RigidBody3D"]
+mass = 0.1
+inertia = Vector3(1, 1, 1)
+physics_material_override = SubResource("PhysicsMaterial_uiccc")
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("TorusMesh_owusp")
+surface_material_override/0 = SubResource("StandardMaterial3D_qnxs0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_sjmua")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.707107, 0.707107, -3.09086e-08, 0, -4.37114e-08, -1, -0.707107, 0.707107, -3.09086e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_17xcx")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.707107, -0.707107, 3.09086e-08, 0, -4.37114e-08, -1, 0.707107, 0.707107, -3.09086e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_17xcx")

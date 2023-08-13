@@ -1,0 +1,412 @@
+[gd_scene load_steps=17 format=3 uid="uid://cff1f3pxqbajn"]
+
+[ext_resource type="PackedScene" uid="uid://dylovbcephl4e" path="res://mini4wd/axes.tscn" id="1_6prik"]
+[ext_resource type="Script" path="res://test/rear_axle_torque_slider_test.gd" id="2_esai2"]
+[ext_resource type="PackedScene" uid="uid://cv3riuqcnf34q" path="res://graphs/timeseries_graph.tscn" id="3_b40t2"]
+[ext_resource type="Script" path="res://graph_plotter_utilities/timeseries_graph_plotter_monitoring.gd" id="4_gm1sh"]
+[ext_resource type="Script" path="res://graphs/line_spec.gd" id="5_l1e3i"]
+[ext_resource type="PackedScene" uid="uid://cj6ggx2tss1v3" path="res://graphs/scatter_graph.tscn" id="6_aa0mu"]
+[ext_resource type="Script" path="res://graph_plotter_utilities/comet_graph_plotter_monitoring.gd" id="7_h2b8b"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c7u5x"]
+size = Vector3(100, 100, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nm4n5"]
+size = Vector3(0.5, 1, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0udve"]
+size = Vector3(0.5, 1, 0.25)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dkyp1"]
+font_size = 24
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Resource" id="Resource_wq8x4"]
+script = ExtResource("5_l1e3i")
+label = "Rear"
+color = Color(1, 0.576471, 0.517647, 1)
+width = 3.0
+
+[sub_resource type="Resource" id="Resource_efqtv"]
+script = ExtResource("5_l1e3i")
+label = "Front"
+color = Color(0.341176, 0.67451, 0.94902, 1)
+width = 3.0
+
+[sub_resource type="Resource" id="Resource_j0r1h"]
+script = ExtResource("5_l1e3i")
+label = "Bridge"
+color = Color(0, 0.94902, 0, 1)
+width = 3.0
+
+[sub_resource type="Resource" id="Resource_txbiw"]
+script = ExtResource("5_l1e3i")
+label = "BridgeRear"
+color = Color(1, 0.87451, 0.235294, 1)
+width = 2.0
+
+[sub_resource type="Resource" id="Resource_i81lb"]
+script = ExtResource("5_l1e3i")
+label = "FrontBridge"
+color = Color(0.780392, 0.329412, 0.992157, 1)
+width = 2.0
+
+[node name="Test" type="Node"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -11.2033, 1.71456, 2.15368)
+projection = 1
+current = true
+size = 5.0
+
+[node name="Camera3D2" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.281477, 6.91991, 0.128162)
+projection = 1
+size = 10.0
+
+[node name="Camera3D5" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.797826, 0.602888, 0, -0.602888, 0.797826, -0.281477, 6.77976, 6.82344)
+projection = 1
+size = 10.0
+
+[node name="Camera3D3" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.392867, 0.919595, 0, -0.919595, 0.392867, -5.31038, 3.37431, 1.51661)
+size = 10.0
+
+[node name="Camera3D4" type="Camera3D" parent="."]
+transform = Transform3D(-2.62836e-08, 0.601299, -0.799024, -3.49264e-08, 0.799024, 0.601299, 1, 4.37113e-08, -1.77636e-14, -8.35133, 1.73735, 1.51661)
+size = 10.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.364303, 0.930692, 0.0330964, -0.0904761, -2.4853e-08, 0.995899, 0.926875, -0.365803, 0.0842054, -2.29655, 9, 3.80134)
+
+[node name="Area_Gravity" type="Area3D" parent="."]
+editor_description = "Gravitational field"
+gravity_space_override = 3
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area_Gravity"]
+shape = SubResource("BoxShape3D_c7u5x")
+
+[node name="Area_Magnet" type="Area3D" parent="."]
+editor_description = "Magnet field"
+collision_layer = 2
+collision_mask = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area_Magnet"]
+shape = SubResource("BoxShape3D_c7u5x")
+
+[node name="GearBoxWall3" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0.5, 3.61671)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GearBoxWall3"]
+shape = SubResource("BoxShape3D_nm4n5")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="GearBoxWall3"]
+node_a = NodePath("..")
+node_b = NodePath("../../Axes/RearAxis")
+params/bias = 0.99
+
+[node name="GearBoxWall4" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0.5, -0.564958)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GearBoxWall4"]
+shape = SubResource("BoxShape3D_nm4n5")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="GearBoxWall4"]
+node_a = NodePath("..")
+node_b = NodePath("../../Axes/RearAxis")
+params/bias = 0.99
+
+[node name="GearBoxWall8" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0.5, -6.10248)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GearBoxWall8"]
+shape = SubResource("BoxShape3D_nm4n5")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="GearBoxWall8"]
+node_a = NodePath("..")
+node_b = NodePath("../../Axes/RearAxis")
+params/bias = 0.99
+
+[node name="GearBoxWall9" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0.5, 3.61655)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GearBoxWall9"]
+shape = SubResource("BoxShape3D_nm4n5")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="GearBoxWall9"]
+node_a = NodePath("..")
+node_b = NodePath("../../Axes/FrontAxis")
+params/bias = 0.99
+
+[node name="GearBoxWall10" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0.5, -0.565449)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GearBoxWall10"]
+shape = SubResource("BoxShape3D_nm4n5")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="GearBoxWall10"]
+node_a = NodePath("..")
+node_b = NodePath("../../Axes/FrontAxis")
+params/bias = 0.99
+
+[node name="GearBoxWall11" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0.5, -6.10245)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GearBoxWall11"]
+shape = SubResource("BoxShape3D_nm4n5")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="GearBoxWall11"]
+node_a = NodePath("..")
+node_b = NodePath("../../Axes/FrontAxis")
+params/bias = 0.99
+
+[node name="GearBoxWall5" type="RigidBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6.38462, 0.5, 2.75)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GearBoxWall5"]
+shape = SubResource("BoxShape3D_0udve")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="GearBoxWall5"]
+node_a = NodePath("..")
+node_b = NodePath("../../Axes/AxisBridge")
+params/bias = 0.99
+
+[node name="GearBoxWall6" type="RigidBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.81188, 0.5, 2.75)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GearBoxWall6"]
+shape = SubResource("BoxShape3D_0udve")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="GearBoxWall6"]
+node_a = NodePath("..")
+node_b = NodePath("../../Axes/AxisBridge")
+params/bias = 0.99
+
+[node name="GearBoxWall12" type="RigidBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.51395, 0.5, 2.75)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GearBoxWall12"]
+shape = SubResource("BoxShape3D_0udve")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="GearBoxWall12"]
+node_a = NodePath("..")
+node_b = NodePath("../../Axes/AxisBridge")
+params/bias = 0.99
+
+[node name="GearBoxWall7" type="RigidBody3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6.26898, 0.5, 2.75)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GearBoxWall7"]
+shape = SubResource("BoxShape3D_0udve")
+
+[node name="HingeJoint3D" type="HingeJoint3D" parent="GearBoxWall7"]
+node_a = NodePath("..")
+node_b = NodePath("../../Axes/AxisBridge")
+params/bias = 0.99
+
+[node name="Axes" parent="." instance=ExtResource("1_6prik")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CollisionPolygon3D" parent="Axes/AxisBridge/T10" index="0"]
+polygon = PackedVector2Array(0.2996, 0.0147, 0.276, 0.0285, 0.2577, 0.0364, 0.2433, 0.0397, 0.2344, 0.0404, 0.2315, 0.0402, 0.1847, 0.0321, 0.1683, 0.0826, 0.21, 0.1035, 0.2134, 0.1051, 0.2202, 0.1108, 0.2298, 0.1221, 0.2408, 0.1397, 0.251, 0.1642, 0.2338, 0.188, 0.2072, 0.1858, 0.1871, 0.1809, 0.1735, 0.1751, 0.165, 0.1705, 0.1636, 0.1686, 0.1306, 0.1345, 0.0876, 0.1658, 0.1098, 0.2077, 0.11, 0.2105, 0.113, 0.2191, 0.1142, 0.2338, 0.1127, 0.2545, 0.1066, 0.2804, 0.0786, 0.2895, 0.0584, 0.2721, 0.0451, 0.2563, 0.0374, 0.2436, 0.034, 0.2354, 0.0333, 0.2326, 0.0266, 0.1856, -0.0266, 0.1856, -0.0333, 0.2326, -0.034, 0.2354, -0.0374, 0.2436, -0.0451, 0.2563, -0.0584, 0.2721, -0.0786, 0.2895, -0.1066, 0.2804, -0.1127, 0.2545, -0.1142, 0.2338, -0.113, 0.2191, -0.11, 0.2105, -0.1098, 0.2077, -0.0876, 0.1658, -0.1306, 0.1345, -0.1636, 0.1686, -0.165, 0.1705, -0.1735, 0.1751, -0.1871, 0.1809, -0.2072, 0.1858, -0.2338, 0.188, -0.251, 0.1642, -0.2408, 0.1397, -0.2298, 0.1221, -0.2202, 0.1108, -0.2134, 0.1051, -0.21, 0.1035, -0.1683, 0.0826, -0.1847, 0.0321, -0.2315, 0.0402, -0.2344, 0.0404, -0.2433, 0.0397, -0.2577, 0.0364, -0.276, 0.0285, -0.2996, 0.0147, -0.2996, -0.0147, -0.276, -0.0285, -0.2577, -0.0364, -0.2433, -0.0397, -0.2344, -0.0404, -0.2315, -0.0402, -0.1847, -0.0321, -0.1683, -0.0826, -0.21, -0.1035, -0.2134, -0.1051, -0.2202, -0.1108, -0.2298, -0.1221, -0.2408, -0.1397, -0.251, -0.1642, -0.2338, -0.188, -0.2072, -0.1858, -0.1871, -0.1809, -0.1735, -0.1751, -0.165, -0.1705, -0.1636, -0.1686, -0.1306, -0.1345, -0.0876, -0.1658, -0.1098, -0.2077, -0.11, -0.2105, -0.113, -0.2191, -0.1142, -0.2338, -0.1127, -0.2545, -0.1066, -0.2804, -0.0786, -0.2895, -0.0584, -0.2721, -0.0451, -0.2563, -0.0374, -0.2436, -0.034, -0.2354, -0.0333, -0.2326, -0.0266, -0.1856, 0.0266, -0.1856, 0.0333, -0.2326, 0.034, -0.2354, 0.0374, -0.2436, 0.0451, -0.2563, 0.0584, -0.2721, 0.0786, -0.2895, 0.1066, -0.2804, 0.1127, -0.2545, 0.1142, -0.2338, 0.113, -0.2191, 0.11, -0.2105, 0.1098, -0.2077, 0.0876, -0.1658, 0.1306, -0.1345, 0.1636, -0.1686, 0.165, -0.1705, 0.1735, -0.1751, 0.1871, -0.1809, 0.2072, -0.1858, 0.2338, -0.188, 0.251, -0.1642, 0.2408, -0.1397, 0.2298, -0.1221, 0.2202, -0.1108, 0.2134, -0.1051, 0.21, -0.1035, 0.1683, -0.0826, 0.1847, -0.0321, 0.2315, -0.0402, 0.2344, -0.0404, 0.2433, -0.0397, 0.2577, -0.0364, 0.276, -0.0285, 0.2996, -0.0147, 0.2996, 0.0147)
+
+[node name="CollisionPolygon3D" parent="Axes/AxisBridge/T10_2" index="0"]
+polygon = PackedVector2Array(0.2996, 0.0147, 0.276, 0.0285, 0.2577, 0.0364, 0.2433, 0.0397, 0.2344, 0.0404, 0.2315, 0.0402, 0.1847, 0.0321, 0.1683, 0.0826, 0.21, 0.1035, 0.2134, 0.1051, 0.2202, 0.1108, 0.2298, 0.1221, 0.2408, 0.1397, 0.251, 0.1642, 0.2338, 0.188, 0.2072, 0.1858, 0.1871, 0.1809, 0.1735, 0.1751, 0.165, 0.1705, 0.1636, 0.1686, 0.1306, 0.1345, 0.0876, 0.1658, 0.1098, 0.2077, 0.11, 0.2105, 0.113, 0.2191, 0.1142, 0.2338, 0.1127, 0.2545, 0.1066, 0.2804, 0.0786, 0.2895, 0.0584, 0.2721, 0.0451, 0.2563, 0.0374, 0.2436, 0.034, 0.2354, 0.0333, 0.2326, 0.0266, 0.1856, -0.0266, 0.1856, -0.0333, 0.2326, -0.034, 0.2354, -0.0374, 0.2436, -0.0451, 0.2563, -0.0584, 0.2721, -0.0786, 0.2895, -0.1066, 0.2804, -0.1127, 0.2545, -0.1142, 0.2338, -0.113, 0.2191, -0.11, 0.2105, -0.1098, 0.2077, -0.0876, 0.1658, -0.1306, 0.1345, -0.1636, 0.1686, -0.165, 0.1705, -0.1735, 0.1751, -0.1871, 0.1809, -0.2072, 0.1858, -0.2338, 0.188, -0.251, 0.1642, -0.2408, 0.1397, -0.2298, 0.1221, -0.2202, 0.1108, -0.2134, 0.1051, -0.21, 0.1035, -0.1683, 0.0826, -0.1847, 0.0321, -0.2315, 0.0402, -0.2344, 0.0404, -0.2433, 0.0397, -0.2577, 0.0364, -0.276, 0.0285, -0.2996, 0.0147, -0.2996, -0.0147, -0.276, -0.0285, -0.2577, -0.0364, -0.2433, -0.0397, -0.2344, -0.0404, -0.2315, -0.0402, -0.1847, -0.0321, -0.1683, -0.0826, -0.21, -0.1035, -0.2134, -0.1051, -0.2202, -0.1108, -0.2298, -0.1221, -0.2408, -0.1397, -0.251, -0.1642, -0.2338, -0.188, -0.2072, -0.1858, -0.1871, -0.1809, -0.1735, -0.1751, -0.165, -0.1705, -0.1636, -0.1686, -0.1306, -0.1345, -0.0876, -0.1658, -0.1098, -0.2077, -0.11, -0.2105, -0.113, -0.2191, -0.1142, -0.2338, -0.1127, -0.2545, -0.1066, -0.2804, -0.0786, -0.2895, -0.0584, -0.2721, -0.0451, -0.2563, -0.0374, -0.2436, -0.034, -0.2354, -0.0333, -0.2326, -0.0266, -0.1856, 0.0266, -0.1856, 0.0333, -0.2326, 0.034, -0.2354, 0.0374, -0.2436, 0.0451, -0.2563, 0.0584, -0.2721, 0.0786, -0.2895, 0.1066, -0.2804, 0.1127, -0.2545, 0.1142, -0.2338, 0.113, -0.2191, 0.11, -0.2105, 0.1098, -0.2077, 0.0876, -0.1658, 0.1306, -0.1345, 0.1636, -0.1686, 0.165, -0.1705, 0.1735, -0.1751, 0.1871, -0.1809, 0.2072, -0.1858, 0.2338, -0.188, 0.251, -0.1642, 0.2408, -0.1397, 0.2298, -0.1221, 0.2202, -0.1108, 0.2134, -0.1051, 0.21, -0.1035, 0.1683, -0.0826, 0.1847, -0.0321, 0.2315, -0.0402, 0.2344, -0.0404, 0.2433, -0.0397, 0.2577, -0.0364, 0.276, -0.0285, 0.2996, -0.0147, 0.2996, 0.0147)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1154.0
+offset_bottom = 647.0
+
+[node name="HSlider" type="HSlider" parent="Control"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 76.0
+offset_right = 243.0
+offset_bottom = 92.0
+min_value = -10.0
+max_value = 10.0
+step = 0.1
+script = ExtResource("2_esai2")
+
+[node name="Label" type="Label" parent="Control/HSlider"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = -51.0
+offset_right = 200.0
+offset_bottom = -14.0
+text = "Rear axle torque"
+label_settings = SubResource("LabelSettings_dkyp1")
+
+[node name="Button" type="Button" parent="Control/HSlider"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = -14.0
+offset_right = 316.0
+offset_bottom = 32.0
+text = "Reset"
+
+[node name="LineGraph" parent="Control" instance=ExtResource("3_b40t2")]
+position = Vector2(365, 24)
+time_max = 5.0
+value_max = 3.5
+value_min = -3.5
+
+[node name="RearProbe" type="Node" parent="Control/LineGraph" node_paths=PackedStringArray("target")]
+script = ExtResource("4_gm1sh")
+target = NodePath("../../../Axes/RearAxis")
+property_name = "rotation"
+subproperty_name = "z"
+line_spec = SubResource("Resource_wq8x4")
+
+[node name="FrontProbe" type="Node" parent="Control/LineGraph" node_paths=PackedStringArray("target")]
+script = ExtResource("4_gm1sh")
+target = NodePath("../../../Axes/FrontAxis")
+property_name = "rotation"
+subproperty_name = "z"
+line_spec = SubResource("Resource_efqtv")
+
+[node name="BridgeProbe" type="Node" parent="Control/LineGraph" node_paths=PackedStringArray("target")]
+script = ExtResource("4_gm1sh")
+target = NodePath("../../../Axes/AxisBridge")
+property_name = "rotation"
+subproperty_name = "z"
+line_spec = SubResource("Resource_j0r1h")
+
+[node name="RearT10Probe" type="Node" parent="Control/LineGraph" node_paths=PackedStringArray("target")]
+script = ExtResource("4_gm1sh")
+target = NodePath("../../../Axes/AxisBridge/T10")
+property_name = "global_rotation"
+subproperty_name = "z"
+line_spec = SubResource("Resource_txbiw")
+
+[node name="FrontT10Probe2" type="Node" parent="Control/LineGraph" node_paths=PackedStringArray("target")]
+script = ExtResource("4_gm1sh")
+target = NodePath("../../../Axes/AxisBridge/T10_2")
+property_name = "global_rotation"
+subproperty_name = "z"
+line_spec = SubResource("Resource_i81lb")
+
+[node name="scatter_graph" parent="Control" instance=ExtResource("6_aa0mu")]
+visible = false
+position = Vector2(266, 316)
+history_size = 10
+label_x = "x"
+label_y = "y"
+default_plot_color = Color(1, 0, 0, 1)
+default_dot_radius = 3.0
+x_range = Vector2(-0.1, 0.1)
+y_range = Vector2(-0.1, 0.1)
+
+[node name="BridgeRearProbe" type="Node" parent="Control/scatter_graph" node_paths=PackedStringArray("x_target", "y_target")]
+script = ExtResource("7_h2b8b")
+x_target = NodePath("../../../Axes/AxisBridge/T10")
+x_property_name = "position"
+x_subproperty_name = "x"
+y_target = NodePath("../../../Axes/AxisBridge/T10")
+y_property_name = "position"
+y_subproperty_name = "y"
+
+[node name="scatter_graph2" parent="Control" instance=ExtResource("6_aa0mu")]
+visible = false
+position = Vector2(586, 315)
+history_size = 10
+label_x = "x"
+label_y = "y"
+default_plot_color = Color(1, 0, 0, 1)
+default_dot_radius = 3.0
+x_range = Vector2(-0.1, 0.1)
+y_range = Vector2(-0.1, 0.1)
+
+[node name="BridgeFrontProbe" type="Node" parent="Control/scatter_graph2" node_paths=PackedStringArray("x_target", "y_target")]
+script = ExtResource("7_h2b8b")
+x_target = NodePath("../../../Axes/AxisBridge/T10_2")
+x_property_name = "position"
+x_subproperty_name = "x"
+y_target = NodePath("../../../Axes/AxisBridge/T10_2")
+y_property_name = "position"
+y_subproperty_name = "y"
+
+[connection signal="value_changed" from="Control/HSlider" to="Control/HSlider" method="_on_value_changed"]
+[connection signal="pressed" from="Control/HSlider/Button" to="Control/HSlider" method="_on_button_pressed"]
+
+[editable path="Axes"]
+[editable path="Axes/RearAxis"]
+[editable path="Axes/FrontAxis"]
+[editable path="Axes/AxisBridge"]
+[editable path="Axes/AxisBridge/T10"]
+[editable path="Axes/AxisBridge/T10_2"]
